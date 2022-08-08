@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on yazinnnn</title>
-    <link>http://yazinnnn.github.io/categories/</link>
+    <link>https://yazinnnn.github.io/categories/</link>
     <description>Recent content in Categories on yazinnnn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Mon, 08 Aug 2022 14:11:28 +0800</lastBuildDate><atom:link href="http://yazinnnn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Aug 2022 14:11:28 +0800</lastBuildDate><atom:link href="https://yazinnnn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
