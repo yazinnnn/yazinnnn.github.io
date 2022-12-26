@@ -30,11 +30,25 @@
 
 
 
-<html class="not-ready text-sm lg:text-base" lang="zh">
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="zh"
+>
   <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
 
   
   <title>My First Post - yazinnnn</title>
@@ -46,7 +60,10 @@
 hi from 123
 (prn &#34;hello world&#34;) hi hi hi
 sususu" />
-  <meta name="author" content="" />
+  <meta
+    name="author"
+    content=""
+  />
   
 
   
@@ -66,18 +83,13 @@ sususu" />
   
 
   
-  
-  
-  <link
-    rel="preload"
-    as="image"
-    href="https://yazinnnn.github.io/theme.png"
-  />
+   
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/theme.png" />
 
   
   
   
-  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/77a0fa4626cfcfd4cf4e58e18cbb3135?s=160&amp;d=identicon" />
+  <link rel="preload" as="image" href="https://cdn.v2ex.com/gravatar/77a0fa4626cfcfd4cf4e58e18cbb3135?s=160&amp;d=identicon" />
   
   
 
@@ -143,7 +155,9 @@ sususu"/>
   <body class="text-black duration-200 ease-out dark:text-white">
     <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
-    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold" href="https://yazinnnn.github.io/"
+    <a
+      class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold"
+      href="https://yazinnnn.github.io/"
       >yazinnnn</a
     >
     <a
@@ -155,21 +169,37 @@ sususu"/>
     class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
   ></a>
 
+  
   <script>
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    
     const htmlClass = document.documentElement.classList;
-    setTimeout(() => htmlClass.remove('not-ready'), 10);
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
 
-    const setDark = (newDark) => {
-      metaTheme.setAttribute('content', newDark ? '#000' : '#fbfbfb');
-      htmlClass[newDark ? 'add' : 'remove']('dark');
-      localStorage.setItem('dark', newDark);
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
     };
 
     
     const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    const darkVal = localStorage.getItem('dark');
-    setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
 
     
     darkScheme.addEventListener('change', (event) => {
@@ -180,12 +210,6 @@ sususu"/>
     const btnDark = document.querySelector('.btn-dark');
     btnDark.addEventListener('click', () => {
       setDark(localStorage.getItem('dark') !== 'true');
-    });
-
-    
-    const btnMenu = document.querySelector('.btn-menu');
-    btnMenu.addEventListener('click', () => {
-      htmlClass.toggle('open');
     });
   </script>
 
@@ -283,14 +307,21 @@ sususu"/>
 
     </main>
 
-    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
   <div class="mr-auto">
     &copy; 2022
     <a class="link" href="https://yazinnnn.github.io/">yazinnnn</a>
   </div>
-  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
   >️
-  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank"
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
     >▷ Paper 6</a
   >
 </footer>
