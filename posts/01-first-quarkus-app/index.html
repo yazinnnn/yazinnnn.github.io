@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="zh"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>01 第一个quarkus应用 - yazinnnn</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="先看看官网的介绍 容器优先 支持命令式与反应式 社区和标准驱动 Knative支持 开发者乐趣 官网提供的性能测试图 废话不多说, 直接体验. 首先直接去官网app生成页面(https://code.quarkus.io/)去生成一个应用, ideaU可以直接在项目中生成.
+构建工具选择gradle&#43;kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin
+下载后解压用idea打开,导入项目
+创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用
+创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中
+dev模式运行, 可以用quarkus cli或者gradle tasks
+quarkus dev //或者 ./gradlew quarkusDev 测试一下三个api
+日志中对应请求使用的线程
+可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)
+构建二进制文件 在构建native文件之前, 先构建一下fat jar文件, quarkus build -Dquarkus.package.type=uber-jar构建
+然后构建native文件,quarkus build -Dquarkus.package.type=native构建
+完成后查看一下大小, native文件比jar文件大30m左右
+测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m
+jvm模式下,3个api的性能测试及内存占用
+然后测试native应用, 启动时间0.02秒, 占用内存42m
+native模式下的性能测试及内存占用
+可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.
+好了,第一个quarkus app创建结束,happy coding~ " />
+  <meta
+    name="author"
+    content=""
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://yazinnnn.github.io/main.min.css" />
+
+  
+  <script
+    defer
+    src="https://yazinnnn.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.v2ex.com/gravatar/77a0fa4626cfcfd4cf4e58e18cbb3135?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/twitter.svg" />
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://yazinnnn.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://yazinnnn.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.101.0" />
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="01 第一个quarkus应用" />
+<meta property="og:description" content="先看看官网的介绍 容器优先 支持命令式与反应式 社区和标准驱动 Knative支持 开发者乐趣 官网提供的性能测试图 废话不多说, 直接体验. 首先直接去官网app生成页面(https://code.quarkus.io/)去生成一个应用, ideaU可以直接在项目中生成.
+构建工具选择gradle&#43;kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin
+下载后解压用idea打开,导入项目
+创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用
+创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中
+dev模式运行, 可以用quarkus cli或者gradle tasks
+quarkus dev //或者 ./gradlew quarkusDev 测试一下三个api
+日志中对应请求使用的线程
+可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)
+构建二进制文件 在构建native文件之前, 先构建一下fat jar文件, quarkus build -Dquarkus.package.type=uber-jar构建
+然后构建native文件,quarkus build -Dquarkus.package.type=native构建
+完成后查看一下大小, native文件比jar文件大30m左右
+测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m
+jvm模式下,3个api的性能测试及内存占用
+然后测试native应用, 启动时间0.02秒, 占用内存42m
+native模式下的性能测试及内存占用
+可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.
+好了,第一个quarkus app创建结束,happy coding~ " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yazinnnn.github.io/posts/01-first-quarkus-app/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-02T10:52:11+08:00" />
+<meta property="article:modified_time" content="2023-01-02T10:52:11+08:00" />
+
+
+  
+  <meta itemprop="name" content="01 第一个quarkus应用">
+<meta itemprop="description" content="先看看官网的介绍 容器优先 支持命令式与反应式 社区和标准驱动 Knative支持 开发者乐趣 官网提供的性能测试图 废话不多说, 直接体验. 首先直接去官网app生成页面(https://code.quarkus.io/)去生成一个应用, ideaU可以直接在项目中生成.
+构建工具选择gradle&#43;kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin
+下载后解压用idea打开,导入项目
+创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用
+创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中
+dev模式运行, 可以用quarkus cli或者gradle tasks
+quarkus dev //或者 ./gradlew quarkusDev 测试一下三个api
+日志中对应请求使用的线程
+可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)
+构建二进制文件 在构建native文件之前, 先构建一下fat jar文件, quarkus build -Dquarkus.package.type=uber-jar构建
+然后构建native文件,quarkus build -Dquarkus.package.type=native构建
+完成后查看一下大小, native文件比jar文件大30m左右
+测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m
+jvm模式下,3个api的性能测试及内存占用
+然后测试native应用, 启动时间0.02秒, 占用内存42m
+native模式下的性能测试及内存占用
+可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.
+好了,第一个quarkus app创建结束,happy coding~ "><meta itemprop="datePublished" content="2023-01-02T10:52:11+08:00" />
+<meta itemprop="dateModified" content="2023-01-02T10:52:11+08:00" />
+<meta itemprop="wordCount" content="65">
+<meta itemprop="keywords" content="quarkus,cloud native," />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="01 第一个quarkus应用"/>
+<meta name="twitter:description" content="先看看官网的介绍 容器优先 支持命令式与反应式 社区和标准驱动 Knative支持 开发者乐趣 官网提供的性能测试图 废话不多说, 直接体验. 首先直接去官网app生成页面(https://code.quarkus.io/)去生成一个应用, ideaU可以直接在项目中生成.
+构建工具选择gradle&#43;kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin
+下载后解压用idea打开,导入项目
+创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用
+创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中
+dev模式运行, 可以用quarkus cli或者gradle tasks
+quarkus dev //或者 ./gradlew quarkusDev 测试一下三个api
+日志中对应请求使用的线程
+可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)
+构建二进制文件 在构建native文件之前, 先构建一下fat jar文件, quarkus build -Dquarkus.package.type=uber-jar构建
+然后构建native文件,quarkus build -Dquarkus.package.type=native构建
+完成后查看一下大小, native文件比jar文件大30m左右
+测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m
+jvm模式下,3个api的性能测试及内存占用
+然后测试native应用, 启动时间0.02秒, 占用内存42m
+native模式下的性能测试及内存占用
+可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.
+好了,第一个quarkus app创建结束,happy coding~ "/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold"
+      href="https://yazinnnn.github.io/"
+      >yazinnnn</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about"
+        >关于</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./twitter.svg)"
+        href=" https://twitter.com/jiekonga "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/yazinnnn "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://yazinnnn.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">01 第一个quarkus应用</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Jan 2, 2023</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="先看看官网的介绍">先看看官网的介绍</h2>
+<p><img src="/img/image-20230102105908067.png" alt="image-20230102105908067"></p>
+<ul>
+<li>容器优先</li>
+<li>支持命令式与反应式</li>
+<li>社区和标准驱动</li>
+<li>Knative支持</li>
+<li>开发者乐趣</li>
+</ul>
+<h2 id="官网提供的性能测试图">官网提供的性能测试图</h2>
+<p><img src="/img/image-20230102110206720.png" alt="image-20230102110206720"></p>
+<h2 id="废话不多说-直接体验">废话不多说, 直接体验.</h2>
+<p>首先直接去官网app生成页面(<a href="https://code.quarkus.io/">https://code.quarkus.io/</a>)去生成一个应用, ideaU可以直接在项目中生成.</p>
+<p><img src="/img/image-20230102111421138.png" alt="image-20230102111421138"></p>
+<p>构建工具选择gradle+kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin</p>
+<p>下载后解压用idea打开,导入项目</p>
+<p>创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用</p>
+<p>创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中</p>
+<p><img src="/img/image-20230102221215688.png" alt="image-20230102221215688"></p>
+<p><img src="/img/image-20230102221241236.png" alt="image-20230102221241236"></p>
+<p>dev模式运行, 可以用quarkus cli或者gradle tasks</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>quarkus dev
+</span></span><span style="display:flex;"><span>//或者
+</span></span><span style="display:flex;"><span>./gradlew quarkusDev
+</span></span></code></pre></div><p><img src="/img/image-20230102221456312.png" alt="image-20230102221456312"></p>
+<p>测试一下三个api</p>
+<p><img src="/img/image-20230102221618434.png" alt="image-20230102221618434"></p>
+<p>日志中对应请求使用的线程</p>
+<p><img src="/img/image-20230102221719865.png" alt="image-20230102221719865"></p>
+<p>可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)</p>
+<h2 id="构建二进制文件">构建二进制文件</h2>
+<p>在构建native文件之前, 先构建一下fat jar文件, <code>quarkus build -Dquarkus.package.type=uber-jar</code>构建</p>
+<p>然后构建native文件,<code>quarkus build -Dquarkus.package.type=native</code>构建</p>
+<p>完成后查看一下大小, native文件比jar文件大30m左右</p>
+<p><img src="/img/image-20230102222857585.png" alt="image-20230102222857585"></p>
+<p>测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m</p>
+<p><img src="/img/image-20230102223002738.png" alt="image-20230102223002738"></p>
+<p><img src="/img/image-20230102223158579.png" alt="image-20230102223158579"></p>
+<p>jvm模式下,3个api的性能测试及内存占用</p>
+<p><img src="/img/image-20230102224444995.png" alt="image-20230102224444995"></p>
+<p>然后测试native应用, 启动时间0.02秒, 占用内存42m</p>
+<p><img src="/img/image-20230102223251924.png" alt="image-20230102223251924"></p>
+<p><img src="/img/image-20230102223322860.png" alt="image-20230102223322860"></p>
+<p>native模式下的性能测试及内存占用</p>
+<p><img src="/img/image-20230102224214013.png" alt="image-20230102224214013"></p>
+<p>可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.</p>
+<h3 id="好了第一个quarkus-app创建结束happy-coding">好了,第一个quarkus app创建结束,happy coding~</h3>
+</section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a
+      class="mr-1.5 mb-1.5 rounded-lg bg-black/[3%] px-5 py-2 no-underline dark:bg-white/[8%]"
+      href="https://yazinnnn.github.io/tags/quarkus"
+      >quarkus</a
+    >
+     
+    <a
+      class="mr-1.5 mb-1.5 rounded-lg bg-black/[3%] px-5 py-2 no-underline dark:bg-white/[8%]"
+      href="https://yazinnnn.github.io/tags/cloud-native"
+      >cloud native</a
+    >
+    
+  </footer>
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end p-6 pl-3 no-underline"
+      href="https://yazinnnn.github.io/posts/00-quarkus-prepare/"
+      ><span>00 Quarkus 学习准备工作</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://yazinnnn.github.io/">yazinnnn</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>

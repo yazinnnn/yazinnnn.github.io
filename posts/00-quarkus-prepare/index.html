@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="zh"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>00 Quarkus 学习准备工作 - yazinnnn</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="0. quarkus是什么 一套适用于GraalVM和HotSpot的(后略&hellip;
+官网介绍 https://quarkus.io/
+A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.
+由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具.
+1. 本系列博客需要用到的工具 推荐工具
+sdkman, jvm系安装及环境管理工具
+https://sdkman.io/
+安装命令curl -s &quot;https://get.sdkman.io&quot; | bash
+必须工具
+graalvm/jdk
+sdk list java可以查看可用graalvm/jdk
+可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)
+安装命令sdk install java 22.3.r17-nik
+安装完成后可以选择设置为默认jdk
+graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image
+相关文档 https://www.graalvm.org/latest/reference-manual/native-image/
+maven或gradle
+直接安装最新版即可
+sdk install maven或sdk install gradle" />
+  <meta
+    name="author"
+    content=""
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://yazinnnn.github.io/main.min.css" />
+
+  
+  <script
+    defer
+    src="https://yazinnnn.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://cdn.v2ex.com/gravatar/77a0fa4626cfcfd4cf4e58e18cbb3135?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/twitter.svg" />
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/github.svg" />
+  
+  <link rel="preload" as="image" href="https://yazinnnn.github.io/rss.svg" />
+  
+
+  
+  <link rel="icon" href="https://yazinnnn.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://yazinnnn.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.101.0" />
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="00 Quarkus 学习准备工作" />
+<meta property="og:description" content="0. quarkus是什么 一套适用于GraalVM和HotSpot的(后略&hellip;
+官网介绍 https://quarkus.io/
+A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.
+由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具.
+1. 本系列博客需要用到的工具 推荐工具
+sdkman, jvm系安装及环境管理工具
+https://sdkman.io/
+安装命令curl -s &quot;https://get.sdkman.io&quot; | bash
+必须工具
+graalvm/jdk
+sdk list java可以查看可用graalvm/jdk
+可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)
+安装命令sdk install java 22.3.r17-nik
+安装完成后可以选择设置为默认jdk
+graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image
+相关文档 https://www.graalvm.org/latest/reference-manual/native-image/
+maven或gradle
+直接安装最新版即可
+sdk install maven或sdk install gradle" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yazinnnn.github.io/posts/00-quarkus-prepare/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-01T12:13:54+08:00" />
+<meta property="article:modified_time" content="2023-01-01T12:13:54+08:00" />
+
+
+  
+  <meta itemprop="name" content="00 Quarkus 学习准备工作">
+<meta itemprop="description" content="0. quarkus是什么 一套适用于GraalVM和HotSpot的(后略&hellip;
+官网介绍 https://quarkus.io/
+A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.
+由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具.
+1. 本系列博客需要用到的工具 推荐工具
+sdkman, jvm系安装及环境管理工具
+https://sdkman.io/
+安装命令curl -s &quot;https://get.sdkman.io&quot; | bash
+必须工具
+graalvm/jdk
+sdk list java可以查看可用graalvm/jdk
+可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)
+安装命令sdk install java 22.3.r17-nik
+安装完成后可以选择设置为默认jdk
+graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image
+相关文档 https://www.graalvm.org/latest/reference-manual/native-image/
+maven或gradle
+直接安装最新版即可
+sdk install maven或sdk install gradle"><meta itemprop="datePublished" content="2023-01-01T12:13:54+08:00" />
+<meta itemprop="dateModified" content="2023-01-01T12:13:54+08:00" />
+<meta itemprop="wordCount" content="145">
+<meta itemprop="keywords" content="quarkus,cloud native," />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="00 Quarkus 学习准备工作"/>
+<meta name="twitter:description" content="0. quarkus是什么 一套适用于GraalVM和HotSpot的(后略&hellip;
+官网介绍 https://quarkus.io/
+A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.
+由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具.
+1. 本系列博客需要用到的工具 推荐工具
+sdkman, jvm系安装及环境管理工具
+https://sdkman.io/
+安装命令curl -s &quot;https://get.sdkman.io&quot; | bash
+必须工具
+graalvm/jdk
+sdk list java可以查看可用graalvm/jdk
+可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)
+安装命令sdk install java 22.3.r17-nik
+安装完成后可以选择设置为默认jdk
+graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image
+相关文档 https://www.graalvm.org/latest/reference-manual/native-image/
+maven或gradle
+直接安装最新版即可
+sdk install maven或sdk install gradle"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold"
+      href="https://yazinnnn.github.io/"
+      >yazinnnn</a
+    >
+    <a
+      class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+    ></a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about"
+        >关于</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./twitter.svg)"
+        href=" https://twitter.com/jiekonga "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/yazinnnn "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./rss.svg)"
+        href=" https://yazinnnn.github.io/index.xml "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pt-20 pb-32 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">00 Quarkus 学习准备工作</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Jan 1, 2023</time>
+      
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="0-quarkus是什么">0. quarkus是什么</h2>
+<p>一套适用于GraalVM和HotSpot的(后略&hellip;</p>
+<p>官网介绍 <a href="https://quarkus.io/">https://quarkus.io/</a></p>
+<p><code>A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.</code></p>
+<p><em>由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具</em>.</p>
+<h2 id="1-本系列博客需要用到的工具">1. 本系列博客需要用到的工具</h2>
+<p>推荐工具</p>
+<ul>
+<li>
+<p>sdkman, jvm系安装及环境管理工具</p>
+<p><a href="https://sdkman.io/">https://sdkman.io/</a></p>
+<p>安装命令<code>curl -s &quot;https://get.sdkman.io&quot; | bash</code></p>
+</li>
+</ul>
+<p>必须工具</p>
+<ul>
+<li>
+<p>graalvm/jdk</p>
+<p><code>sdk list java</code>可以查看可用graalvm/jdk</p>
+<p><img src="/img/image-20230101213156613.png" alt="image-20230101213156613"></p>
+<p>可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)</p>
+<p>安装命令<code>sdk install java 22.3.r17-nik</code></p>
+<p>安装完成后可以选择设置为默认jdk</p>
+<p><img src="/img/image-20230101213608989.png" alt="image-20230101213608989"></p>
+<p>graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image</p>
+<p>相关文档 <a href="https://www.graalvm.org/latest/reference-manual/native-image/">https://www.graalvm.org/latest/reference-manual/native-image/</a></p>
+<p><img src="/img/image-20230102083814166.png" alt="image-20230102083814166"></p>
+</li>
+<li>
+<p>maven或gradle</p>
+<p>直接安装最新版即可</p>
+<p><code>sdk install maven</code>或<code>sdk install gradle</code></p>
+<p><img src="/img/image-20230102083158702.png" alt="image-20230102083158702"></p>
+</li>
+<li>
+<p>quarkus-cli</p>
+<p><a href="https://quarkus.io/guides/cli-tooling">https://quarkus.io/guides/cli-tooling</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sdk install quarkus
+</span></span></code></pre></div></li>
+<li>
+<p>你喜欢的ide</p>
+<p>idea社区版,终极版,vscode,eclipse均可, 我使用的是idea社区版</p>
+<p><code>sudo pacman -S intellij-idea-community-edition</code>或者jetbrains-toolbox安装或者官网下载安装包</p>
+</li>
+<li>
+<p>docker和docker-compose</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo pacman -S docker
+</span></span><span style="display:flex;"><span>sudo pacman -S docker-compose
+</span></span></code></pre></div></li>
+<li>
+<p>curl或者httpie</p>
+<p><a href="https://curl.se/">https://curl.se/</a></p>
+<p><a href="https://httpie.io/">https://httpie.io/</a></p>
+<p><code>sudo pacman -S httpie</code></p>
+</li>
+<li>
+<p>postman</p>
+<p><a href="https://www.postman.com/">https://www.postman.com/</a></p>
+<p><code>yay -S postman-bin</code></p>
+</li>
+</ul>
+<h2 id="2-本系列博客需要的前置知识">2. 本系列博客需要的前置知识</h2>
+<ul>
+<li>
+<p>基本的java se知识</p>
+</li>
+<li>
+<p>基础的网络相关知识</p>
+</li>
+<li>
+<p>基础的数据库知识</p>
+</li>
+<li>
+<p>kotlin及coroutine基础知识</p>
+<p><a href="https://kotlinlang.org/docs/home.html">https://kotlinlang.org/docs/home.html</a></p>
+<p><a href="https://kotlinlang.org/docs/coroutines-overview.html">https://kotlinlang.org/docs/coroutines-overview.html</a></p>
+</li>
+<li>
+<p>vertx基础知识</p>
+<p><a href="https://vertx.io/introduction-to-vertx-and-reactive/">https://vertx.io/introduction-to-vertx-and-reactive/</a></p>
+<p><a href="https://vertx.io/docs/">https://vertx.io/docs/</a></p>
+</li>
+<li>
+<p>reactive基础知识</p>
+<p><a href="http://www.reactive-streams.org/">http://www.reactive-streams.org/</a></p>
+<p><a href="https://www.reactivemanifesto.org/zh-CN">https://www.reactivemanifesto.org/zh-CN</a></p>
+</li>
+</ul>
+<h2 id="3-推荐阅读">3. 推荐阅读</h2>
+<ul>
+<li>
+<p>quarkus</p>
+<p>官方文档</p>
+<p><a href="https://quarkus.io/get-started/">https://quarkus.io/get-started/</a></p>
+<p><a href="https://quarkus.io/guides/">https://quarkus.io/guides/</a></p>
+<p>书籍</p>
+<p><a href="https://quarkus.io/books/">https://quarkus.io/books/</a></p>
+</li>
+<li>
+<p>vert.x</p>
+<p>官方文档 (至少读完core部分)</p>
+<p><a href="https://vertx.io/docs/vertx-core/java/">https://vertx.io/docs/vertx-core/java/</a></p>
+<p>书籍</p>
+<p>vert.x in action</p>
+<p><a href="https://book.douban.com/subject/35947110/">https://book.douban.com/subject/35947110/</a></p>
+<p><a href="https://www.manning.com/books/vertx-in-action">https://www.manning.com/books/vertx-in-action</a></p>
+</li>
+<li>
+<p>smallrye mutiny</p>
+<p><a href="https://smallrye.io/smallrye-mutiny/2.0.0/">https://smallrye.io/smallrye-mutiny/2.0.0/</a></p>
+</li>
+<li>
+<p>hibernate reactive</p>
+<p><a href="https://hibernate.org/reactive/documentation/1.1/reference/html_single/">https://hibernate.org/reactive/documentation/1.1/reference/html_single/</a></p>
+</li>
+</ul>
+</section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a
+      class="mr-1.5 mb-1.5 rounded-lg bg-black/[3%] px-5 py-2 no-underline dark:bg-white/[8%]"
+      href="https://yazinnnn.github.io/tags/quarkus"
+      >quarkus</a
+    >
+     
+    <a
+      class="mr-1.5 mb-1.5 rounded-lg bg-black/[3%] px-5 py-2 no-underline dark:bg-white/[8%]"
+      href="https://yazinnnn.github.io/tags/cloud-native"
+      >cloud native</a
+    >
+    
+  </footer>
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center p-6 pr-3 no-underline"
+      href="https://yazinnnn.github.io/posts/01-first-quarkus-app/"
+      ><span class="mr-1.5">←</span><span>01 第一个quarkus应用</span></a
+    >
+    
+    
+  </nav>
+  
+
+  
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://yazinnnn.github.io/">yazinnnn</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >▷ Paper 6</a
+  >
+</footer>
+
+  </body>
+</html>

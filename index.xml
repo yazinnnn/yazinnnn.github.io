@@ -6,17 +6,67 @@
     <description>Recent content on yazinnnn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Mon, 08 Aug 2022 14:11:28 +0800</lastBuildDate><atom:link href="https://yazinnnn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Jan 2023 10:52:11 +0800</lastBuildDate><atom:link href="https://yazinnnn.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My First Post</title>
-      <link>https://yazinnnn.github.io/posts/my-first-post/</link>
-      <pubDate>Mon, 08 Aug 2022 14:11:28 +0800</pubDate>
+      <title>01 第一个quarkus应用</title>
+      <link>https://yazinnnn.github.io/posts/01-first-quarkus-app/</link>
+      <pubDate>Mon, 02 Jan 2023 10:52:11 +0800</pubDate>
       
-      <guid>https://yazinnnn.github.io/posts/my-first-post/</guid>
-      <description>test
-hi from 123
-(prn &amp;#34;hello world&amp;#34;) hi hi hi
-sususu</description>
+      <guid>https://yazinnnn.github.io/posts/01-first-quarkus-app/</guid>
+      <description>先看看官网的介绍 容器优先 支持命令式与反应式 社区和标准驱动 Knative支持 开发者乐趣 官网提供的性能测试图 废话不多说, 直接体验. 首先直接去官网app生成页面(https://code.quarkus.io/)去生成一个应用, ideaU可以直接在项目中生成.
+构建工具选择gradle+kotlin dsl, jdk选择17, 插件选择reactive jackson和kotlin
+下载后解压用idea打开,导入项目
+创建一个rest endpoint, 分别将请求参数大写,小写和反转, 分别用blocking, reactive, suspend的方式调用
+创建一个service类, 包括上述三个业务的实现, 然后将其以构造器的方式注入api中
+dev模式运行, 可以用quarkus cli或者gradle tasks
+quarkus dev //或者 ./gradlew quarkusDev 测试一下三个api
+日志中对应请求使用的线程
+可以看到upper是以阻塞方式运行的api(运行在worker线程),而lower和reverse则是反应式api(运行在IO线程及vertx eventloop线程)
+构建二进制文件 在构建native文件之前, 先构建一下fat jar文件, quarkus build -Dquarkus.package.type=uber-jar构建
+然后构建native文件,quarkus build -Dquarkus.package.type=native构建
+完成后查看一下大小, native文件比jar文件大30m左右
+测试一下两个文件, 首先是jar, 启动时间0.65秒, 启动后占用内存160m
+jvm模式下,3个api的性能测试及内存占用
+然后测试native应用, 启动时间0.02秒, 占用内存42m
+native模式下的性能测试及内存占用
+可以看到,jit充分预热后的性能还是比aot强不少的, 不过jvm内存占用也大了很多.
+好了,第一个quarkus app创建结束,happy coding~ </description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://yazinnnn.github.io/about/</link>
+      <pubDate>Sun, 01 Jan 2023 17:21:43 +0800</pubDate>
+      
+      <guid>https://yazinnnn.github.io/about/</guid>
+      <description>hei hei hei</description>
+    </item>
+    
+    <item>
+      <title>00 Quarkus 学习准备工作</title>
+      <link>https://yazinnnn.github.io/posts/00-quarkus-prepare/</link>
+      <pubDate>Sun, 01 Jan 2023 12:13:54 +0800</pubDate>
+      
+      <guid>https://yazinnnn.github.io/posts/00-quarkus-prepare/</guid>
+      <description>0. quarkus是什么 一套适用于GraalVM和HotSpot的(后略&amp;hellip;
+官网介绍 https://quarkus.io/
+A Kubernetes Native Java stack tailored for OpenJDK HotSpot and GraalVM, crafted from the best of breed Java libraries and standards.
+由于我是在manjaro linux上做的开发, windows和mac用户请自行安装相关工具.
+1. 本系列博客需要用到的工具 推荐工具
+sdkman, jvm系安装及环境管理工具
+https://sdkman.io/
+安装命令curl -s &amp;quot;https://get.sdkman.io&amp;quot; | bash
+必须工具
+graalvm/jdk
+sdk list java可以查看可用graalvm/jdk
+可选择graalvm ce, mandrel, liberica nik等, 这里选择 liberica nik 22.3 r17(基于jdk17构建)
+安装命令sdk install java 22.3.r17-nik
+安装完成后可以选择设置为默认jdk
+graalvm ce安装后需要安装native-image, liberica nik或者mandrel则自带native-image
+相关文档 https://www.graalvm.org/latest/reference-manual/native-image/
+maven或gradle
+直接安装最新版即可
+sdk install maven或sdk install gradle</description>
     </item>
     
   </channel>

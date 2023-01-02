@@ -6,16 +6,14 @@
     <description>Recent content in xxx on yazinnnn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Mon, 08 Aug 2022 14:11:28 +0800</lastBuildDate><atom:link href="https://yazinnnn.github.io/categories/xxx/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Jan 2023 17:21:43 +0800</lastBuildDate><atom:link href="https://yazinnnn.github.io/categories/xxx/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My First Post</title>
-      <link>https://yazinnnn.github.io/posts/my-first-post/</link>
-      <pubDate>Mon, 08 Aug 2022 14:11:28 +0800</pubDate>
+      <title>About</title>
+      <link>https://yazinnnn.github.io/about/</link>
+      <pubDate>Sun, 01 Jan 2023 17:21:43 +0800</pubDate>
       
-      <guid>https://yazinnnn.github.io/posts/my-first-post/</guid>
-      <description>test
-hi from 123
-(prn &amp;#34;hello world&amp;#34;) hi hi hi</description>
+      <guid>https://yazinnnn.github.io/about/</guid>
+      <description>hei hei hei</description>
     </item>
     
   </channel>

@@ -2,28 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://yazinnnn.github.io/posts/01-first-quarkus-app/</loc>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
+  </url><url>
     <loc>https://yazinnnn.github.io/categories/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
   </url><url>
-    <loc>https://yazinnnn.github.io/tags/clojure/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <loc>https://yazinnnn.github.io/tags/cloud-native/</loc>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
   </url><url>
-    <loc>https://yazinnnn.github.io/categories/clojure/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
-  </url><url>
-    <loc>https://yazinnnn.github.io/tags/functional-programming/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
-  </url><url>
-    <loc>https://yazinnnn.github.io/posts/my-first-post/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <loc>https://yazinnnn.github.io/categories/cloud-native/</loc>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
   </url><url>
     <loc>https://yazinnnn.github.io/posts/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
+  </url><url>
+    <loc>https://yazinnnn.github.io/tags/quarkus/</loc>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
+  </url><url>
+    <loc>https://yazinnnn.github.io/categories/quarkus/</loc>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
   </url><url>
     <loc>https://yazinnnn.github.io/tags/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
   </url><url>
     <loc>https://yazinnnn.github.io/</loc>
-    <lastmod>2022-08-08T14:11:28+08:00</lastmod>
+    <lastmod>2023-01-02T10:52:11+08:00</lastmod>
+  </url><url>
+    <loc>https://yazinnnn.github.io/about/</loc>
+    <lastmod>2023-01-01T17:21:43+08:00</lastmod>
+  </url><url>
+    <loc>https://yazinnnn.github.io/categories/xxx/</loc>
+    <lastmod>2023-01-01T17:21:43+08:00</lastmod>
+  </url><url>
+    <loc>https://yazinnnn.github.io/posts/00-quarkus-prepare/</loc>
+    <lastmod>2023-01-01T12:13:54+08:00</lastmod>
   </url>
 </urlset>
